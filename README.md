@@ -1,4 +1,4 @@
-# status-api
+# status
 
 This Project is Made by **[deno](https://deno.land)**
 
@@ -9,5 +9,5 @@ Copyright 2020 Team. Callisto, All rights reserved.
 ## Run
 
 ```bash
-deno --allow-net mod.ts
+deno --allow-net main.ts
 ```

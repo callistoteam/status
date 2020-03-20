@@ -1,0 +1,111 @@
+<html lang="ko">
+    <head>
+        <title>팀 칼리스토 서비스 상태</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="title" content="팀 칼리스토 서비스 상태">
+        <link rel="icon" type="image/png" href="images/ico.png">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="팀 칼리스토 서비스 상태">
+        <meta property="og:description" content="서비스 상태를 확인합니다.">
+        <meta property="og:site_name" content="팀 칼리스토 서비스 상태">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    </head>
+    <body>
+        <header style=" background: #5ab5ff;">
+            <h1 class="ui center aligned header" style="font-size: 100px; color: white;">Team. Callisto</h1>
+            <h2 class="ui center aligned header" style="color: white;">서비스 상태</h2>
+        </header>
+        <br>
+        <div class="ui container">
+            <div class="ui message <%= color[status.information.all] %>"><%= {true: '모든 시스템이 정상입니다!', false: '하나 이상의 서비스에 문제가 발생하였습니다.'}[status.information.all] %></div>
+            <h1 class="ui aligned header">디스코드봇</h1>
+            <table class="ui striped table">
+                <tbody>
+                  <tr>
+                    <td> 
+                      <i class="discord icon"></i> 원더봇 
+                    </td>
+                    <td class="<%= color[status.information.wonderbot] %> right aligned"><%= codes[status.information.wonderbot] %></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <i class="discord icon"></i> 파크봇
+                    </td>
+                    <td class="<%= color[status.information.parkbot] %> right aligned"><%= codes[status.information.parkbot] %></td>
+                  </tr>
+                </tbody>
+              </table>
+
+      
+            <h1 class="ui aligned header">웹</h1>
+            <table class="ui striped table">
+                <tbody>
+                  <tr>
+                    <td> 
+                      <i class="server icon"></i> 원더봇 웹사이트 (프론트앤드)
+                    </td>
+                    <td class="<%= color[status.information.wbweb] %> right aligned"><%= codes[status.information.wbweb] %></td>
+                  </tr>
+                  <tr>
+                    <td> 
+                      <i class="server icon"></i> 원더봇 API (백앤드)
+                    </td>
+                    <td class="<%= color[status.information.wbapi] %> right aligned"><%= codes[status.information.wbapi] %></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <i class="github icon"></i> 칼리스토 웹사이트
+                    </td>
+                    <td class="<%= color[status.information.web] %> right aligned"><%= codes[status.information.web] %></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <i class="server icon"></i> 칼리스토 서포트
+                    </td>
+                    <td class="<%= color[status.information.support] %> right aligned"><%= codes[status.information.support] %></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h1 class="ui aligned header">기타</h1>
+              <table class="ui striped table">
+                  <tbody>
+                    <tr>
+                      <td> 
+                        <i class="discord icon"></i> 디스코드
+                      </td>
+                      <td class="gray right aligned"><%= status.information.discord %></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="cloud icon"></i> CloudFlare
+                      </td>
+                      <td class="gray right aligned"><%= status.information.cloudflare %></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="github icon"></i> Github
+                      </td>
+                      <td class="gray right aligned"><%= status.information.github %></td>
+                    </tr>
+                  </tbody>
+                </table>
+        </div>
+    </div>
+    </body>
+</html>
+
+<style>
+    .green {
+        color: green
+    }
+    .red {
+        color: red
+    }
+    .gray {
+        color: gray;
+    }
+</style>

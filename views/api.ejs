@@ -1,0 +1,107 @@
+<html>
+    <head>
+        
+        <title>팀 칼리스토 서비스 상태</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="title" content="팀 칼리스토 서비스 상태">
+        <link rel="icon" type="image/png" href="images/ico.png">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="팀 칼리스토 서비스 상태">
+        <meta property="og:description" content="서비스 상태를 확인합니다.">
+        <meta property="og:site_name" content="팀 칼리스토 서비스 상태">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    </head>
+
+                    
+    <body>
+            
+            
+        <div class="ui container">
+            <br>
+                <h1 class="ui header">
+                        원더봇 API
+                        <div class="sub header">
+                            <p>이 페이지는 원더봇 상태 페이지 API입니다. 누구나 제한 없이 무료로 사용하실 수 있습니다. 사용법은 이 문서를 참고해주시고, 지원이 따로 필요하시다면 <a href="https://discord.gg/Qjuu4UP">원더랜드 지원서버</a>에 방문해주세요! </p>
+                        </div>
+                      </h1>
+            <ul class="ui list">
+                    <li><a href="#link">기본 URL</a></li>
+                    <li><a href="#status">상태</a></li>
+                    </ul>
+            <section id="link">
+                    <h1 class="ui header">
+                            기본 URL
+                            <div class="sub header">
+                                <p>API의 기본 URL(Base URL)입니다.</p>
+
+                            </div>
+                          </h1>
+                <div class="ui fluid labeled input copytext" onclick="copy('base', '.copytext')">
+                <input id="base" type="text" value="https://status.callisto.team" readonly>
+                <div class="ui corner label">
+                    <i class="copy icon"></i>
+                </div>
+                </div>
+            </section>
+            <br>
+            <section id="status">
+                <h1 class="ui header">
+                        상태
+                        <div class="sub header">
+                            <p>상태 API 정보입니다. 모든 서비스의 현재 상태를 확인할 수 있습니다. (3분마다 업데이트됩니다)</p>
+                        </div>
+                      </h1>
+            <div class="ui fluid labeled input status" onclick="copy('statusapi', '.status')">
+                <div class="ui label green">
+                GET
+                </div>
+                <input id="statusapi" type="text" value="https://status.callisto.team/api/status" readonly>
+                <div class="ui corner label">
+                    <i class="copy icon"></i>
+                </div>
+                </div>
+            <br/>
+            <div class="ui form">
+                <h2 class="ui header">결과</h2>
+            <textarea readonly>
+{
+    "updated":"2020-03-20T08:34:31.021Z",
+    "status":true,
+    "information":{
+    "all":true,
+    "wonderbot":true,
+    "parkbot":true,
+    "web":true,
+    "wbweb":true,
+    "support":true,
+    "discord":"All Systems Operational",
+    "cloudflare":"Minor Service Outage",
+    "github":"All Systems Operational"
+    }
+}
+            </textarea>
+            </div>
+        </section>
+        </div>
+    </body>
+    <script>
+    function copy(id, c) {
+  /* Get the text field */
+  var copyText = document.getElementById(id);
+  /* Select the text field */
+  copyText.select(); 
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+  $(c)
+        .popup({
+            title: '클립보드로 복사되었습니다!',
+                on:'click'
+        })
+        .popup('show');
+  /* Alert the copied text */
+}</script>
+    </html>

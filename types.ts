@@ -3,8 +3,15 @@ export interface Status {
     status: boolean; 
     error?: string;
     information?: { 
-        website: boolean; 
+        all: boolean;
+        wonderbot: boolean;
+        wbapi: boolean;
+        parkbot: boolean;
+        support: boolean; 
+        wbweb: boolean; 
+        web: boolean
         discord: string; 
         cloudflare: string; 
-        github: string; }
+        github: string;
+}
 }

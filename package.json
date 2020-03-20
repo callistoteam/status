@@ -1,0 +1,25 @@
+{
+  "name": "status",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/callistoteam/status.git",
+  "author": "원더 <wonderbotsupport@naver.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^13.9.2",
+    "discord.js": "^12.0.2",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.3",
+    "@types/node-fetch": "^2.5.5",
+    "typescript": "^2.6.2"
+  },
+  "scripts": {
+    "watch": "node_modules/.bin/tsc -w",
+    "build": "node_modules/.bin/tsc --skipLibCheck",
+    "start": "npm run build && node dist/index.js"
+  }
+}
