@@ -13,6 +13,7 @@ export interface Status {
         discord: string; 
         cloudflare: string; 
         github: string;
+        issues: Issue[]
 }
 }
 

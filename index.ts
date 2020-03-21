@@ -35,14 +35,14 @@ app.get("/", async (req : express.Request , res : express.Response) => {
         const support = await fetch('https://support.callisto.team', { method: 'GET'}).then(() => {return true}).catch(() => {return false})
         const wonderbot = (await client.users.cache.get(config.wonderbot)?.presence.status) === 'offline' ? false : true
         const parkbot = (await client.users.cache.get(config.parkbot)?.presence.status) === 'offline' ? false : true
-        status = { updated: new Date(), status: true, information: { all: wbweb&&web&&support&&wonderbot&&parkbot, wonderbot, parkbot, web, wbweb, wbapi, support, discord: discord.status.description, cloudflare: cloudflare.status.description, github: github.status.description } }
+        const issues:Issue[] = await fetch(config.github + '/issues?state=all').then(r=> r.json()).catch(e=> { return []})
+        status = { updated: new Date(), status: true, information: { all: wbweb&&web&&support&&wonderbot&&parkbot, wonderbot, parkbot, web, wbweb, wbapi, support, discord: discord.status.description, cloudflare: cloudflare.status.description, github: github.status.description, issues: issues.splice(0, 9) } }
         }
         catch {
-            status = { updated: new Date(), status: false, information: { all: false, wonderbot: false, parkbot: false, web: false, wbweb: false, wbapi: false, support: false,discord: 'Fail to get Information', cloudflare: 'Fail to get Information', github: 'Fail to get Information' } }
+            status = { updated: new Date(), status: false, information: { all: false, wonderbot: false, parkbot: false, web: false, wbweb: false, wbapi: false, support: false,discord: 'Fail to get Information', cloudflare: 'Fail to get Information', github: 'Fail to get Information', issues: [] } }
         }
     }
-    const issue:Issue[] = await fetch(config.github + '/issues?state=all').then(r=> r.json()).catch(e=> console.log(e))
-    res.render('index', {status, codes: { true: '정상', false: '오프라인'}, color: {true: 'green', false: 'red'}, issue: issue.splice(0, 9), moment, md })
+    await res.render('index', {status, codes: { true: '정상', false: '오프라인'}, color: {true: 'green', false: 'red'}, moment, md })
 })
 
 app.get("/api", async (req : express.Request , res : express.Response) => {
@@ -61,11 +61,12 @@ app.get("/api/status", async (req : express.Request , res : express.Response) =>
         const wbapi = await fetch('https://api.wonderbot.xyz', { method: 'GET'}).then(() => {return true}).catch(() => {return false})
         const wonderbot = (await client.users.cache.get(config.wonderbot)?.presence.status) === 'offline' ? false : true
         const parkbot = (await client.users.cache.get(config.parkbot)?.presence.status) === 'offline' ? false : true
-        status = { updated: new Date(), status: true, information: { all: wbweb&&web&&support&&wonderbot&&parkbot&&wbapi, wonderbot, parkbot, web, wbweb, wbapi, support, discord: discord.status.description, cloudflare: cloudflare.status.description, github: github.status.description } }
+        const issues:Issue[] = await fetch(config.github + '/issues?state=all').then(r=> r.json()).catch(e=> { return [] })
+        status = { updated: new Date(), status: true, information: { all: wbweb&&web&&support&&wonderbot&&parkbot&&wbapi, wonderbot, parkbot, web, wbweb, wbapi, support, discord: discord.status.description, cloudflare: cloudflare.status.description, github: github.status.description, issues: issues.splice(0, 9) } }
 
         }
         catch {
-            status = { updated: new Date(), status: false, information: { all: false, wbapi: false, wonderbot: false, parkbot: false, web: false, wbweb: false, support: false, discord: 'Fail to get Information', cloudflare: 'Fail to get Information', github: 'Fail to get Information' } }
+            status = { updated: new Date(), status: false, information: { all: false, wbapi: false, wonderbot: false, parkbot: false, web: false, wbweb: false, support: false, discord: 'Fail to get Information', cloudflare: 'Fail to get Information', github: 'Fail to get Information', issues: [] } }
         }
         res.json(status)
     }
@@ -74,8 +75,11 @@ app.get("/api/status", async (req : express.Request , res : express.Response) =>
     }
   })
   app.listen(8080, function(){
-    console.log(`server listening on port 8080`);
     status = {updated: new Date(0), status: false}  
 })
 
 
+app.use(function(err: Error, req: express.Request, res: express.Response) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+  });
