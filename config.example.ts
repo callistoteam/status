@@ -1,5 +1,6 @@
 export default {
     token: '' ,
     wonderbot: '',
-    parkbot: ''
+    parkbot: '',
+    github: '' //https://api.github.com/repos/callistoteam/status
 }

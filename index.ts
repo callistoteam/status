@@ -31,14 +31,17 @@ app.get("/", async (req : express.Request , res : express.Response) => {
         const wonderbot = (await client.users.cache.get(config.wonderbot)?.presence.status) === 'offline' ? false : true
         const parkbot = (await client.users.cache.get(config.parkbot)?.presence.status) === 'offline' ? false : true
         status = { updated: new Date(), status: true, information: { all: wbweb&&web&&support&&wonderbot&&parkbot, wonderbot, parkbot, web, wbweb, wbapi, support, discord: discord.status.description, cloudflare: cloudflare.status.description, github: github.status.description } }
-
         }
         catch {
             status = { updated: new Date(), status: false, information: { all: false, wonderbot: false, parkbot: false, web: false, wbweb: false, wbapi: false, support: false,discord: 'Fail to get Information', cloudflare: 'Fail to get Information', github: 'Fail to get Information' } }
         }
     }
-    if(!status.status) res.render('index', {status, codes: { true: '정상', false: '오프라인'}, color: {true: 'green', false: 'red'}})
-    else res.render('index', {status: status, codes: { true: '정상', false: '오프라인'}, color: {true: 'green', false: 'red'}})
+    const issue = (await fetch(config.github + '/issues').then(r=> r.json()).catch(()=>[]))
+    issue.forEach(async el=> {
+        el.comment = await fetch(el.comments_url).then(r=> r.json())
+    })
+    if(!status.status) res.render('index', {status, codes: { true: '정상', false: '오프라인'}, color: {true: 'green', false: 'red'}, issues})
+    else res.render('index', {status: status, codes: { true: '정상', false: '오프라인'}, color: {true: 'green', false: 'red'}, issues})
 })
 
 app.get("/api", async (req : express.Request , res : express.Response) => {
