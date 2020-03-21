@@ -21,7 +21,7 @@
         <br>
         <div class="ui container">
             <div class="ui message <%= color[status.information.all] %>"><%= {true: '모든 시스템이 정상입니다!', false: '하나 이상의 서비스에 문제가 발생하였습니다.'}[status.information.all] %></div>
-            <h1 class="ui aligned header">디스코드봇</h1>
+            <h1 class="ui header">디스코드봇</h1>
             <table class="ui striped table">
                 <tbody>
                   <tr>
@@ -40,7 +40,7 @@
               </table>
 
       
-            <h1 class="ui aligned header">웹</h1>
+            <h1 class="ui header">웹</h1>
             <table class="ui striped table">
                 <tbody>
                   <tr>
@@ -70,7 +70,7 @@
                 </tbody>
               </table>
 
-              <h1 class="ui aligned header">기타</h1>
+              <h1 class="ui header">기타</h1>
               <table class="ui striped table">
                   <tbody>
                     <tr>
@@ -93,9 +93,15 @@
                     </tr>
                   </tbody>
                 </table>
+                <h1 class="ui aligned header">이슈들</h1>
+                <% issue.forEach(el=> { %>
+                    <h2 class="ui header"><%= moment(el.created_at).format('MMMM Do YYYY, h:mm:ss a') %></h2>
+                    <div class="ui divider"></div>
+                    <a class="ui huge header" href="<%= el.html_url %>" style="color: <%= el.labels.length !== 0 ? el.state==='open' ? '#' + el.labels[0].color : '#50d373' : 'black' %>"><%- el.state=="open" ? "해결중 - " : "해결됨 - " %><%= el.title %></a>
+                    <h3><%- md(el.body) %></h3>
+                <% })%>
+                <div class="ui center aligned basic segment"><a class="ui small secondary button" href="https://github.com/callistoteam/status/issues?q="><i class="github icon"></i>Github에서 더보기</a></div>
         </div>
-        
-    </div>
     </body>
 </html>
 

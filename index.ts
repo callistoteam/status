@@ -1,9 +1,14 @@
 import express from "express";
 import fetch from 'node-fetch'
 import * as Discord from 'discord.js'
+import moment from 'moment';
+import 'moment-with-locales-es6'
+import md from 'marked'
+
+moment.locale('ko')
 
 import config from './config'
-import { Status } from './types'
+import { Status, Issue } from './types'
 let status:Status
 const client = new Discord.Client()
 client.login(config.token)
@@ -36,17 +41,13 @@ app.get("/", async (req : express.Request , res : express.Response) => {
             status = { updated: new Date(), status: false, information: { all: false, wonderbot: false, parkbot: false, web: false, wbweb: false, wbapi: false, support: false,discord: 'Fail to get Information', cloudflare: 'Fail to get Information', github: 'Fail to get Information' } }
         }
     }
-    const issue = (await fetch(config.github + '/issues').then(r=> r.json()).catch(()=>[]))
-    issue.forEach(async el=> {
-        el.comment = await fetch(el.comments_url).then(r=> r.json())
-    })
-    if(!status.status) res.render('index', {status, codes: { true: '정상', false: '오프라인'}, color: {true: 'green', false: 'red'}, issues})
-    else res.render('index', {status: status, codes: { true: '정상', false: '오프라인'}, color: {true: 'green', false: 'red'}, issues})
+    const issue:Issue[] = await fetch(config.github + '/issues?state=all').then(r=> r.json()).catch(e=> console.log(e))
+    res.render('index', {status, codes: { true: '정상', false: '오프라인'}, color: {true: 'green', false: 'red'}, issue: issue.splice(0, 9), moment, md })
 })
 
 app.get("/api", async (req : express.Request , res : express.Response) => {
     res.render('api')
-})
+})  
 
 app.get("/api/status", async (req : express.Request , res : express.Response) => {
     if(status.status === false || Number(status.updated)+180000 < Number(new Date())){
