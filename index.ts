@@ -80,6 +80,7 @@ app.get("/api/status", async (req : express.Request , res : express.Response) =>
 
 
 app.use(function(err: Error, req: express.Request, res: express.Response) {
-    console.error(err.stack);
+    if(!err.stack) return
+    console.error(err.stack)
     res.status(500).send('Something broke!');
   });

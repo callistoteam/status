@@ -97,7 +97,7 @@
                 <% status.information.issues.forEach(el=> { %>
                     <h2 class="ui header"><%= moment(el.created_at).format('MMMM Do YYYY, h:mm:ss a') %></h2>
                     <div class="ui divider"></div>
-                    <a class="ui huge header" href="<%= el.html_url %>" style="color: <%= el.labels.length !== 0 ? el.state==='open' ? '#' + el.labels[0].color : '#50d373' : 'black' %>"><%- el.state=="open" ? "해결중 - " : "해결됨 - " %><%= el.title %></a>
+                    <a class="ui huge header" href="<%= el.html_url %>" style="color: <%= el.labels.length !== 0 ? el.state==='open' ? '#' + el.labels[0].color : '#50d373' : 'black' %>"><%- el.state=="open" ? "해결중 - " : "해결됨 - " %><%= el.title %></a> <a style="color: gray; font-size: 20px;" >#<%= el.number %></a>
                     <h3><%- md(el.body) %></h3>
                 <% })%>
                 <div class="ui center aligned basic segment"><a class="ui small secondary button" href="https://github.com/callistoteam/status/issues?q="><i class="github icon"></i>Github에서 더보기</a></div>
