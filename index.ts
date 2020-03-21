@@ -26,16 +26,16 @@ app.set('api', './views/api.ejs')
 app.get("/", async (req : express.Request , res : express.Response) => {
     if(Number(status.updated)+180000 < Number(new Date())){
         try {
-        const discord = await fetch('https://srhpyqt94yxb.statuspage.io/api/v2/status.json', { method: 'GET'}).then((r: { json: () => any; }) => r.json())
-        const cloudflare = await fetch('https://yh6f0r4529hb.statuspage.io/api/v2/status.json', { method: 'GET'}).then((r: { json: () => any; }) => r.json())
-        const github = await fetch('https://kctbh9vrtdwd.statuspage.io/api/v2/status.json', { method: 'GET'}).then((r: { json: () => any; }) => r.json())
-        const wbweb = await fetch('https://wonderbot.xyz', { method: 'GET'}).then(() => {return true}).catch(() => {return false})
-        const web = await fetch('https://callisto.team', { method: 'GET'}).then(() => {return true}).catch(() => {return false})
-        const wbapi = await fetch('https://api.wonderbot.xyz', { method: 'GET'}).then(() => {return true}).catch(() => {return false})
-        const support = await fetch('https://support.callisto.team', { method: 'GET'}).then(() => {return true}).catch(() => {return false})
-        const wonderbot = (await client.users.cache.get(config.wonderbot)?.presence.status) === 'offline' ? false : true
-        const parkbot = (await client.users.cache.get(config.parkbot)?.presence.status) === 'offline' ? false : true
-        const issues:Issue[] = await fetch(config.github + '/issues?state=all').then(r=> r.json()).catch(e=> { return []})
+            const discord = await fetch('https://srhpyqt94yxb.statuspage.io/api/v2/status.json', { method: 'GET'}).then((r: { json: () => any; }) => r.json())
+            const cloudflare = await fetch('https://yh6f0r4529hb.statuspage.io/api/v2/status.json', { method: 'GET'}).then((r: { json: () => any; }) => r.json())
+            const github = await fetch('https://kctbh9vrtdwd.statuspage.io/api/v2/status.json', { method: 'GET'}).then((r: { json: () => any; }) => r.json())
+            const wbweb = await fetch('https://wonderbot.xyz', { method: 'GET'}).then((r) => r.status === 200).catch(() => {return false})
+            const web = await fetch('https://callisto.team', { method: 'GET'}).then((r) => r.status === 200).catch(() => {return false})
+            const support = await fetch('https://support.callisto.team', { method: 'GET'}).then((r) => r.status === 200).catch(() => {return false})
+            const wbapi = await fetch('https://api.wonderbot.xyz', { method: 'GET'}).then((r) => r.status === 200).catch(() => {return false})
+            const wonderbot = (await client.users.cache.get(config.wonderbot)?.presence.status) === 'offline' ? false : true
+            const parkbot = (await client.users.cache.get(config.parkbot)?.presence.status) === 'offline' ? false : true
+            const issues:Issue[] = await fetch(config.github + '/issues?state=all').then(r=> r.json()).catch(e=> { return [] })
         status = { updated: new Date(), status: true, information: { all: wbweb&&web&&support&&wonderbot&&parkbot, wonderbot, parkbot, web, wbweb, wbapi, support, discord: discord.status.description, cloudflare: cloudflare.status.description, github: github.status.description, issues: issues.splice(0, 9) } }
         }
         catch {
@@ -55,10 +55,10 @@ app.get("/api/status", async (req : express.Request , res : express.Response) =>
         const discord = await fetch('https://srhpyqt94yxb.statuspage.io/api/v2/status.json', { method: 'GET'}).then((r: { json: () => any; }) => r.json())
         const cloudflare = await fetch('https://yh6f0r4529hb.statuspage.io/api/v2/status.json', { method: 'GET'}).then((r: { json: () => any; }) => r.json())
         const github = await fetch('https://kctbh9vrtdwd.statuspage.io/api/v2/status.json', { method: 'GET'}).then((r: { json: () => any; }) => r.json())
-        const wbweb = await fetch('https://wonderbot.xyz', { method: 'GET'}).then(() => {return true}).catch(() => {return false})
-        const web = await fetch('https://callisto.team', { method: 'GET'}).then(() => {return true}).catch(() => {return false})
-        const support = await fetch('https://support.callisto.team', { method: 'GET'}).then(() => {return true}).catch(() => {return false})
-        const wbapi = await fetch('https://api.wonderbot.xyz', { method: 'GET'}).then(() => {return true}).catch(() => {return false})
+        const wbweb = await fetch('https://wonderbot.xyz', { method: 'GET'}).then((r) => r.status === 200).catch(() => {return false})
+        const web = await fetch('https://callisto.team', { method: 'GET'}).then((r) => r.status === 200).catch(() => {return false})
+        const support = await fetch('https://support.callisto.team', { method: 'GET'}).then((r) => r.status === 200).catch(() => {return false})
+        const wbapi = await fetch('https://api.wonderbot.xyz', { method: 'GET'}).then((r) => r.status === 200).catch(() => {return false})
         const wonderbot = (await client.users.cache.get(config.wonderbot)?.presence.status) === 'offline' ? false : true
         const parkbot = (await client.users.cache.get(config.parkbot)?.presence.status) === 'offline' ? false : true
         const issues:Issue[] = await fetch(config.github + '/issues?state=all').then(r=> r.json()).catch(e=> { return [] })
@@ -74,7 +74,8 @@ app.get("/api/status", async (req : express.Request , res : express.Response) =>
         res.json(status)
     }
   })
-  app.listen(8080, function(){
+  app.listen(8080, async function(){
+      console.log('App Ready')
     status = {updated: new Date(0), status: false}  
 })
 
