@@ -52,9 +52,7 @@ export interface Issue {
     state: string,
     locked: boolean,
     assignee: any,
-    assignees: [
-
-    ],
+    assignees: [],
     milestone: any,
     comment?: any[]
     comments: Number,

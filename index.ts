@@ -36,7 +36,7 @@ app.get("/", async (req : express.Request , res : express.Response) => {
             const wonderbot = (await client.users.cache.get(config.wonderbot)?.presence.status) === 'offline' ? false : true
             const parkbot = (await client.users.cache.get(config.parkbot)?.presence.status) === 'offline' ? false : true
             const issues:Issue[] = await fetch(config.github + '/issues?state=all').then(r=> r.json()).catch(e=> { return [] })
-        status = { updated: new Date(), status: true, information: { all: wbweb&&web&&support&&wonderbot&&parkbot, wonderbot, parkbot, web, wbweb, wbapi, support, discord: discord.status.description, cloudflare: cloudflare.status.description, github: github.status.description, issues: issues.splice(0, 9) } }
+        status = { updated: new Date(), status: true, information: { all: discord&&cloudflare&&github&&wbweb&&web&&support&&wbapi&&wonderbot&&parkbot, wonderbot, parkbot, web, wbweb, wbapi, support, discord: discord.status.description, cloudflare: cloudflare.status.description, github: github.status.description, issues: issues.splice(0, 9) } }
         }
         catch {
             status = { updated: new Date(), status: false, information: { all: false, wonderbot: false, parkbot: false, web: false, wbweb: false, wbapi: false, support: false,discord: 'Fail to get Information', cloudflare: 'Fail to get Information', github: 'Fail to get Information', issues: [] } }
@@ -62,7 +62,7 @@ app.get("/api/status", async (req : express.Request , res : express.Response) =>
         const wonderbot = (await client.users.cache.get(config.wonderbot)?.presence.status) === 'offline' ? false : true
         const parkbot = (await client.users.cache.get(config.parkbot)?.presence.status) === 'offline' ? false : true
         const issues:Issue[] = await fetch(config.github + '/issues?state=all').then(r=> r.json()).catch(e=> { return [] })
-        status = { updated: new Date(), status: true, information: { all: wbweb&&web&&support&&wonderbot&&parkbot&&wbapi, wonderbot, parkbot, web, wbweb, wbapi, support, discord: discord.status.description, cloudflare: cloudflare.status.description, github: github.status.description, issues: issues.splice(0, 9) } }
+        status = { updated: new Date(), status: true, information: { all: discord&&cloudflare&&github&&wbweb&&web&&support&&wbapi&&wonderbot&&parkbot, wonderbot, parkbot, web, wbweb, wbapi, support, discord: discord.status.description, cloudflare: cloudflare.status.description, github: github.status.description, issues: issues.splice(0, 9) } }
 
         }
         catch {
