@@ -6,6 +6,7 @@
         "removeComments": true,
         "preserveConstEnums": true,
         "sourceMap": true,
+        "skipLibCheck": true,
         "outDir": "dist",
         "lib": [ "es6" ]
     },
